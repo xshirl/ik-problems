@@ -1,28 +1,25 @@
 from collections import deque
 
-class TreeNode:
-  def __init__(self, val):
-    self.val = val
-    self.left, self.right = None, None
-
 def traverse(root):
-  result = []
+  result = deque()
+  if root is None:
+    return result
+
   queue = deque()
   queue.append(root)
-
   while queue:
-    size = len(queue)
+    levelSize = len(queue)
     currentLevel = []
-    for _ in range(size):
-      node = queue.popleft()
-      currentLevel.append(node.val)
-      if node.left:
-        queue.append(node.left)
-      if node.right:
-        queue.append(node.right)
+    for _ in range(levelSize):
+      currentNode = queue.popleft()
+      # add the node to the current level
+      currentLevel.append(currentNode.val)
+      # insert the children of current node in the queue
+      if currentNode.left:
+        queue.append(currentNode.left)
+      if currentNode.right:
+        queue.append(currentNode.right)
+
     result.appendleft(currentLevel)
 
   return result
-
-  
-      
